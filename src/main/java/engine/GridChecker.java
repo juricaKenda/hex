@@ -25,24 +25,6 @@ public class GridChecker {
         return false;
     }
 
-    private static List<Pair<Integer,Integer>> firstRow(int N){
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        int row = 0;
-        for (int col = 0; col < N; col++) {
-            result.add(new Pair<>(row,col));
-        }
-        return result;
-    }
-
-    private static List<Pair<Integer,Integer>> firstColumn(int N){
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        int col = 0;
-        for (int row = 0; row < N; row++) {
-            result.add(new Pair<>(row,col));
-        }
-        return result;
-    }
-
     public static int minMovesToWin(char[][]grid, char tag){
         int N = grid.length;
         int minMovesToWin = Integer.MAX_VALUE;
@@ -75,9 +57,11 @@ public class GridChecker {
         return minMovesToWin;
     }
 
+    // region algorithms
+
     private static int BFS(char[][] grid, char tag, int N, Queue<PairWithDist> queue) {
         int minimalDistance = Integer.MAX_VALUE;
-        HashSet<Pair> visited = new HashSet<>();
+        HashSet<Pair<Integer,Integer>> visited = new HashSet<>();
 
         while (!queue.isEmpty()){
             PairWithDist current = queue.remove();
@@ -114,20 +98,6 @@ public class GridChecker {
         return minimalDistance;
     }
 
-    private static boolean isEnd(int var, int N) {
-        return var == N-1 ;
-    }
-
-    static class PairWithDist{
-        Pair<Integer,Integer> pair;
-        int distance;
-        PairWithDist(int x, int y, int dist){
-            pair = new Pair<>(x,y);
-            distance = dist;
-        }
-    }
-
-
     private static boolean DFS(char tag, int x, int y, int N, List<Pair<Integer, Integer>> visited, char[][] grid) {
         if(grid[x][y] != tag){
             return false;
@@ -150,8 +120,43 @@ public class GridChecker {
         return false;
     }
 
+    private static List<Pair<Integer,Integer>> firstRow(int N){
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        int row = 0;
+        for (int col = 0; col < N; col++) {
+            result.add(new Pair<>(row,col));
+        }
+        return result;
+    }
 
-    public static List<Pair<Integer, Integer>> getNeighbours(int x, int y, int N) {
+    // endregion
+
+    // region helpers
+
+    private static List<Pair<Integer,Integer>> firstColumn(int N){
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        int col = 0;
+        for (int row = 0; row < N; row++) {
+            result.add(new Pair<>(row,col));
+        }
+        return result;
+    }
+
+
+    private static boolean isEnd(int var, int N) {
+        return var == N-1 ;
+    }
+    static class PairWithDist{
+        Pair<Integer,Integer> pair;
+        int distance;
+        PairWithDist(int x, int y, int dist){
+            pair = new Pair<>(x,y);
+            distance = dist;
+        }
+
+    }
+
+    private static List<Pair<Integer, Integer>> getNeighbours(int x, int y, int N) {
         // generate all possible neighbours
         List<Pair<Integer,Integer>> neighbours = Arrays.asList(
                 new Pair<>(x - 1, y), new Pair<>(x - 1, y + 1),
@@ -174,5 +179,5 @@ public class GridChecker {
 
         return valid;
     }
-
+    // endregion
 }

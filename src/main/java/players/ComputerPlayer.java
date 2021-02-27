@@ -4,8 +4,6 @@ import engine.GridChecker;
 import javafx.util.Pair;
 
 public class ComputerPlayer implements Player{
-
-
     public static final double NONE = -Double.MAX_VALUE;
 
     @Override
@@ -44,6 +42,13 @@ public class ComputerPlayer implements Player{
         grid[moveToPlay.getKey()][moveToPlay.getValue()] = tag;
     }
 
+    private double numberOfMovesToWin(char[][] grid, char tag) {
+        if (GridChecker.gameDone(grid,tag)){
+            return NONE;
+        }
+        return GridChecker.minMovesToWin(grid,tag);
+    }
+
     private Pair<Integer, Integer> pickBestMove(double[][] heuristics, double[][] heuristicsOpponent) {
         int N = heuristics.length;
         double leastMovesToWin = Double.MAX_VALUE;
@@ -64,13 +69,6 @@ public class ComputerPlayer implements Player{
             }
         }
         return new Pair<>(bestX, bestY);
-    }
-
-    private double numberOfMovesToWin(char[][] grid, char tag) {
-        if (GridChecker.gameDone(grid,tag)){
-            return NONE;
-        }
-        return GridChecker.minMovesToWin(grid,tag);
     }
 
 }
