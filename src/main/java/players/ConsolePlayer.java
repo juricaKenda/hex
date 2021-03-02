@@ -11,24 +11,24 @@ public class ConsolePlayer implements Player{
 
     @Override
     public void makeMove(char[][] grid, char tag) {
-        System.out.print("Make move (x y):");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
+        System.out.print("Make move (row col):");
+        int row = scanner.nextInt();
+        int col = scanner.nextInt();
 
-        if (isWithinBounds(grid,x,y) && isEmpty(grid,x,y)){
-            grid[x-1][y-1] = tag;
+        if (isWithinBounds(grid.length,row,col) && isEmpty(grid,row,col)){
+            grid[row-1][col-1] = tag;
             return;
         }
 
         makeMove(grid,tag);
     }
 
-    private boolean isWithinBounds(char[][] grid, int x, int y) {
-        return x <= grid.length && y <= grid[0].length;
+    private boolean isWithinBounds(int N, int row, int col) {
+        return row <= N && col <= N;
     }
 
-    private boolean isEmpty(char[][] grid, int x, int y) {
-        return grid[x-1][y-1] == ' ';
+    private boolean isEmpty(char[][] grid, int row, int col) {
+        return grid[row-1][col-1] == ' ';
     }
 
 }

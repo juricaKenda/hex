@@ -17,7 +17,7 @@ public class GridChecker {
             int row = starter.getKey();
             int col = starter.getValue();
             if (grid[row][col] == tag){
-                if (DFS(tag,row,col,N, new ArrayList<>(), grid)){
+                if (DFS(tag, row, col, N, new ArrayList<>(), grid)){
                     return true;
                 }
             }
@@ -98,17 +98,17 @@ public class GridChecker {
         return minimalDistance;
     }
 
-    private static boolean DFS(char tag, int x, int y, int N, List<Pair<Integer, Integer>> visited, char[][] grid) {
-        if(grid[x][y] != tag){
+    private static boolean DFS(char tag, int row, int col, int N, List<Pair<Integer, Integer>> visited, char[][] grid) {
+        if(grid[row][col] != tag){
             return false;
         }
 
-        if ((tag == 'r' && x == N-1) || (tag == 'b' && y == N-1)){
+        if ((tag == 'r' && isEnd(row, N)) || (tag == 'b' && isEnd(col, N))){
             return true;
         }
 
 
-        for (Pair<Integer, Integer> neighbour : getNeighbours(x,y,N)) {
+        for (Pair<Integer, Integer> neighbour : getNeighbours(row, col, N)) {
             if (!visited.contains(neighbour)) {
                 visited.add(neighbour);
                 boolean reachedEnd = DFS(tag, neighbour.getKey(), neighbour.getValue(), N, visited, grid);

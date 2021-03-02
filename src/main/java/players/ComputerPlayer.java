@@ -9,11 +9,12 @@ public class ComputerPlayer implements Player{
     @Override
     public void makeMove(char[][] grid, char tag) {
         char opponentTag = tag == 'r' ? 'b' : 'r';
-        double[][] heuristics = new double[grid.length][grid.length];
-        double[][] heuristicsOpponent = new double[grid.length][grid.length];
+        int N = grid.length;
+        double[][] heuristics = new double[N][N];
+        double[][] heuristicsOpponent = new double[N][N];
 
-        for (int row = 0; row < grid.length; row++) {
-            for (int col = 0; col < grid[row].length; col++) {
+        for (int row = 0; row < N; row++) {
+            for (int col = 0; col < N; col++) {
                 // this hex is occupied, neither me or the opponent can play this move
                 if (grid[row][col] != ' ') {
                     heuristics[row][col] = Double.MAX_VALUE;
@@ -54,7 +55,7 @@ public class ComputerPlayer implements Player{
         double leastMovesToWin = Double.MAX_VALUE;
         double mostOpponentMoves = Double.MIN_VALUE;
 
-        int bestX = 0,bestY = 0;
+        int bestRow = 0,bestCol = 0;
         for (int row = 0; row < N; row++) {
             for (int col = 0; col < N; col++) {
                 double movesToWin = heuristics[row][col];
@@ -63,12 +64,12 @@ public class ComputerPlayer implements Player{
                 if (leastMovesToWin > movesToWin || (leastMovesToWin == movesToWin && mostOpponentMoves < opponentMoves)){
                     leastMovesToWin = movesToWin;
                     mostOpponentMoves = opponentMoves;
-                    bestX = row;
-                    bestY = col;
+                    bestRow = row;
+                    bestCol = col;
                 }
             }
         }
-        return new Pair<>(bestX, bestY);
+        return new Pair<>(bestRow, bestCol);
     }
 
 }
